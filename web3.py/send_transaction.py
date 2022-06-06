@@ -1,5 +1,4 @@
 # import Web3 class from web3 module
-import math
 from web3 import Web3
 # Setting node endpoint value
 CHAINSTACK_NODE_ENDPOINT = '<NODE_ENDPOINT>'
