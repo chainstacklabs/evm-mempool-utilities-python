@@ -17,6 +17,7 @@ Before running the scripts, make sure you have the following requirements
 you can use the following code to install the desired web3.py version
 
 ```
+cd web3.py
 pip install -r requirements.txt
 ```
 
