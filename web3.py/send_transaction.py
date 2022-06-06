@@ -36,7 +36,7 @@ CHAIN_ID = w3.eth.chain_id
 # While sending the transaction, we must represent all the fee related values and
 # the ethereum value in wei denomination.
 transaction = {
-    'nonce': ACCOUNT_NONCE + 1,
+    'nonce': ACCOUNT_NONCE,
     'to': TO_ACCOUNT,  # recever's address
     'value': w3.toWei(ETH_VALUE, "ether"),
     'gas': 2100000,  # maximum gas that can be used for the transaction execution
