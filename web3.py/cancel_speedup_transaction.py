@@ -14,13 +14,9 @@ TO_ACCOUNT = "<TO_ACCOUNT_ADDRESS>"
 
 # Setting the user private key
 SENDER_PRIVATEKEY = "<SENDER_PRIVATE_KEY>"
-
 # Connect to the node
 w3 = Web3(Web3.HTTPProvider(CHAINSTACK_NODE_ENDPOINT))
 
-
-# Setting the value for chainID
-CHAIN_ID = w3.eth.chain_id
 
 # Set the Value for the percentage multipliers
 SPEEDUP_MULTIPLIER = 1.10  # 10 % increase
@@ -56,7 +52,7 @@ maxPriorityFee = suggestedMaxPriorityFee if suggestedMaxPriorityFee > maxPriorit
 transaction = {
     'nonce': pendingTransactionDetail['nonce'],
     'to': TO_ACCOUNT,  # recever's address
-    'chainId': CHAIN_ID,
+    'chainId': pendingTransactionDetail['chainId'],
     # 0 if you are canceling the transaction
     'value': pendingTransactionDetail['value'],
     # maximum gas that can be used for the transaction execution
@@ -65,9 +61,10 @@ transaction = {
     'maxPriorityFeePerGas': maxPriorityFee,
 }
 signedTransaction = w3.eth.account.sign_transaction(
-    transaction, "<SENDER_PRIVATEKEY>")
+    transaction, SENDER_PRIVATEKEY)
 
 transactionHash = w3.eth.send_raw_transaction(
     signedTransaction.rawTransaction)
 transactionHashHex = w3.toHex(transactionHash)
 transactionReceipt = w3.eth.wait_for_transaction_receipt(transactionHashHex)
+print(transactionReceipt)
