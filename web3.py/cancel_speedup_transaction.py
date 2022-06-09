@@ -51,7 +51,7 @@ maxPriorityFee = suggestedMaxPriorityFee if suggestedMaxPriorityFee > maxPriorit
 
 transaction = {
     'nonce': pendingTransactionDetail['nonce'],
-    'to': TO_ACCOUNT,  # recever's address
+    'to': pendingTransactionDetail['to'],  # recever's address
     'chainId': pendingTransactionDetail['chainId'],
     # 0 if you are canceling the transaction
     'value': pendingTransactionDetail['value'],
