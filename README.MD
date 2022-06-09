@@ -2,7 +2,7 @@
 
 This repository contains the scripts used in the "Developer guide to the transactions in mempool - code edition " blog. The blog discusses some of the reasons for transaction confirmation delays in EVM-based networks. The scripts use python and web3.py library in order to,
 
-* Conduct gas estimation
+* Conduct gas fee estimation
 * Send transaction
 * "Cancel" or "Speed Up" a transaction
 * handle nonce gap

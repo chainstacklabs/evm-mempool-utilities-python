@@ -1,3 +1,5 @@
+## PLEASE GO THROUGH THE README.md FILE BEFORE RUNNING THE CODE ##
+
 # import Web3 class from web3 module
 from web3 import Web3
 # import the in-built statistics module
@@ -12,11 +14,11 @@ CHAINSTACK_NODE_ENDPOINT = '<NODE_ENDPOINT>'
 FROM_ACCOUNT = "<FROM_ACCOUNT_ADDRESS>"
 TO_ACCOUNT = "<TO_ACCOUNT_ADDRESS>"
 
-# setting the constants for gas fee estimation
-# the values are based on the metamask code
+# setting the values for gas fee estimation.
+# The values are based on the metamask code
 
-# setting the percentage multiplier for the basefee
-# the base fee is adjusted by INCREASING the value,
+# Setting the percentage multiplier for the basefee
+# The base fee is adjusted by INCREASING the value,
 # thus the percentage multiplier is calculated using the formula
 #       PERCENTAGE MULTIPLIER = 1 + percentage value ,
 # 10 % increase means, PERCENTAGE MULTIPLIER = 1 + (10/100)
@@ -27,8 +29,9 @@ BASEFEE_PERCENTAGE_MULTIPLIER = {
     "high": 1.25  # 25% increase
 }
 
-# setting the percentage multiplier for the priority fee
-# priority fee median is adjusted by DECREASING the value, the percentage multiplier is calculated using the formula
+# Setting the percentage multiplier for the priority fee
+# priority fee median is adjusted by DECREASING the value,
+# the percentage multiplier is calculated using the formula
 #       PERCENTAGE MULTIPLIER = 1 - percentage value,
 # 6 % decrease means, PERCENTAGE MULTIPLIER = 1 - (6/100)
 # the multipliers are chosen according to the priority [low , medium , high]
@@ -38,8 +41,8 @@ PRIORITY_FEE_PERCENTAGE_MULTIPLIER = {
     "high": .98  # 2% decrease
 }
 
-# the minimum PRIORITY FEE that should be payed corresponding to the user priority
-# WEI denomination
+# the minimum PRIORITY FEE that should be payed,
+#  corresponding to the user priority (in WEI denomination)
 MINIMUM_FEE = {
     "low": 1000000000,
     "medium": 1500000000,
@@ -59,46 +62,56 @@ w3 = Web3(Web3.HTTPProvider(CHAINSTACK_NODE_ENDPOINT))
 
 # parameters :
 # Number of  blocks - 5
-# newest block in the provided range - latest [or you can give the latest block number]
+# newest block in the provided range -
+#    latest [or you can give the latest block number]
 # reward_percentiles - 10,20,30 [ based on metamask]
 feeHistory = w3.eth.fee_history(5, 'latest', [10, 20, 30])
 
-# get the basefee/gas of the latest block
+# get the basefeepergas of the latest block
 latestBaseFeePerGas = feeHistory["baseFeePerGas"][-1]
 
-# get the estimated usage of gas in the following transaction
+# Setting the ether value to be transferred
 ETH_VALUE = .5
+# Calculating the estimated usage of gas in the following transaction
 estimateGasUsed = w3.eth.estimateGas(
     {'to': TO_ACCOUNT, 'from': FROM_ACCOUNT,
         'value': w3.toWei(ETH_VALUE, "ether")})
 
 
-# the reward parameter in feeHistory contains an array of arrays.
-# each of the inner arrays has priority gas values corresponding to the given percentiles [10,20,30] , in the respective order
-# the number of inner arrays equals the number of blocks that we gave as the parameter [5]
-# here we take each of the inner arrays and sort the values in the arrays as low, medium or high, based on the index
+# The reward parameter in feeHistory variable contains an array of arrays.
+# each of the inner arrays has priority gas values,
+# corresponding to the given percentiles [10,20,30]
+# the number of inner arrays =
+#     the number of blocks that we gave as the parameter [5]
+# here we take each of the inner arrays and
+# sort the values in the arrays as low, medium or high,
+# based on the array index
 for feeList in feeHistory["reward"]:
-    feeByPriority["low"].append(feeList[0])  # 10 percentile values - low fees
+    # 10 percentile values - low fees
+    feeByPriority["low"].append(feeList[0])
     # 20 percentile value - medium fees
     feeByPriority["medium"].append(feeList[1])
-    feeByPriority["high"].append(feeList[2])  # 30 percentile value - high fees
+    # 30 percentile value - high fees
+    feeByPriority["high"].append(feeList[2])
 
-# we are going to take each of the sort arrays in the feeByPriority dictatory and
-# calculate the gas estimate based on the priority level,
+# Take each of the sorted arrays in the feeByPriority dictatory and
+# calculate the gas estimate, based on the priority level
 # which is given as the key in the feeByPriority dictatory
 for key in feeByPriority:
-    # adjust the basefee, use the multiplier value corresponding to the key
+    # adjust the basefee,
+    # use the multiplier value corresponding to the key
     adjustedBaseFee = latestBaseFeePerGas * BASEFEE_PERCENTAGE_MULTIPLIER[key]
 
     # get the median of the priority fee based on the key
     medianOfFeeList = statistics.median(feeByPriority[key])
 
-    # adjust the median value, use the multiplier value corresponding to the key
+    # adjust the median value,
+    # use the multiplier value corresponding to the key
     adjustedFeeMedian = (
         medianOfFeeList * PRIORITY_FEE_PERCENTAGE_MULTIPLIER[key])
 
     # if the adjustedFeeMedian falls below the MINIMUM_FEE,
-    # use the MINIMUM_FEE value corresponding to the key as the adjustedFeeMedian
+    # use the MINIMUM_FEE value,
     adjustedFeeMedian = adjustedFeeMedian if adjustedFeeMedian > MINIMUM_FEE[
         key] else MINIMUM_FEE[key]
 
