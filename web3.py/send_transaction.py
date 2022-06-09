@@ -18,8 +18,8 @@ w3 = Web3(Web3.HTTPProvider(CHAINSTACK_NODE_ENDPOINT))
 
 # Setting the transaction variables
 
-# get the MAX_PRIORITY_FEE and MAX_FEE_PER_GAS values,
-# by running the gas estimation script
+# get the MAX_PRIORITY_FEE and MAX_FEE_PER_GAS values
+# by running the gas estimation script.
 # you can choose your preferred priority [ low,medium,high]
 # and copy the corresponding values
 MAX_PRIORITY_FEE = 0
@@ -28,7 +28,7 @@ MAX_FEE_PER_GAS = 0
 # Setting the value that you wish to send
 ETH_VALUE = 0.05
 
-# Setting the account value
+# Getting the account-nonce value
 ACCOUNT_NONCE = w3.eth.getTransactionCount(FROM_ACCOUNT)
 # Setting the value for chainID
 CHAIN_ID = w3.eth.chain_id
