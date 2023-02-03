@@ -40,11 +40,7 @@ This repository contains the scripts used in the [Blockchain transactions in Eth
 
 Before running the code, it is highly recommended that you go through the blog as it describes the whole logic of the code.
 
-Clone this repository:
-
-```sh
-git clone https://github.com/SethuRamanOmanakuttan/Mempool_Guide.git
-```
+Clone this repository.
 
 Install the Python dependencies:
 
@@ -101,11 +97,7 @@ Install Python on your system:
 
 * [Install Python](https://realpython.com/installing-python/)
 
-Clone this repository:
-
-```sh
-git clone https://github.com/SethuRamanOmanakuttan/Mempool_Guide.git
-```
+Clone this repository.
 
 Install the Python dependencies:
   
