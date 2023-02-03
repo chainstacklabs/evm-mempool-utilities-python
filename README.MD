@@ -17,7 +17,7 @@
   <a target="_blank" href="https://chainstack.com/blog/">Chainstack blog</a> •
   <a target="_blank" href="https://docs.chainstack.com">Chainstack docs</a> •
   <a target="_blank" href="https://docs.chainstack.com/api/">Blockchain API reference</a> •
-  <a target="_blank" href="https://console.chainstack.com/user/account/create">Start for free</a> •
+  <a target="_blank" href="https://console.chainstack.com/user/account/create">Start for free</a>
 </p>
 
 # EVM mempool utilities using Python
